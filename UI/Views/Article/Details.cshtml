@@ -1,0 +1,45 @@
+﻿@model ArticleWithUserDetailDto
+
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+            <div class="mt-5">
+                <h1>@Html.DisplayFor(model => model.Title)</h1>
+            </div>
+            <div class="w-100">
+                <img src="data:image/*;base64,@(Convert.ToBase64String(Model.Image))" />
+            </div>
+            <div>
+                <div class="d-inline-flex mt-2">
+                    <a class="link-success text-decoration-none" href="#">@Html.DisplayFor(model => model.WriterName)</a>
+                    <label class="mx-2 text-black-50">@Html.DisplayFor(a => a.CreatedDate)</label>
+                    .
+                    <label class="mx-2 text-black-50">@Html.DisplayFor(a => a.ReadTime)</label>
+                </div>
+            </div>
+            <div class="mt-4">
+                <p>
+                    @Html.DisplayFor(model => model.Content)
+                </p>
+            </div>
+            <div class="mt-4">
+                <div class="d-inline-flex">
+                    <a class="bi-hand-thumbs-up text-dark text-decoration-none mx-3 my-1 fs-4" href="#">Beğenme Sayısı :<label class="mx-2">@Model.LikeCount</label></a>
+                    <a class="bi-chat text-dark text-decoration-none mx-3 my-1 fs-4" href="#">Okunma Sayısı :<label class="mx-2">@Model.ReadingCount</label></a>
+                </div>
+            </div>
+            <div class="mt-4">
+                @foreach (var item in Model.Topics)
+                {
+                    <button type="button" class="btn btn-light">@item</button>
+                }
+            </div>
+        </div>
+        <div class="col-2">
+
+        </div>
+    </div>
+</div>
+

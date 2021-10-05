@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="nav" class="mt-5 pt-5 mb-2 border-bottom border-dark">
+    <div class="container">
+        <div class="col-12">
+            <div class="col-6 offset-1">
+
+                <h1 id="cont-head">
+                    Blog Anasayfa
+                </h1>
+                <br />
+                <br />
+                <a class="btn border-dark bg-transparent mb-5" asp-controller="Home" asp-action="Register">Yazmaya Başlayın</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    @await Component.InvokeAsync("Trends")
+</div>
+
+<hr />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            @await Component.InvokeAsync("LastArticles")
+        </div>
+        <div class="col-4">
+            <h6>Konuları Keşfet</h6>
+            <br />
+            <div>
+                @*@await Component.InvokeAsync("Topics")*@
+            </div>
+            <br />
+            <a class="link-success text-decoration-none" asp-action="Index" asp-controller="Topic">Tüm Konuları Görmek İçin Tıklayınız</a>
+            <hr />
+        </div>
+    </div>
+</div>

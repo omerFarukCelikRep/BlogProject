@@ -1,0 +1,81 @@
+﻿@model EditArticleDto
+
+@section Styles {
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+}
+
+@Html.ValidationSummary()
+<form asp-action="Create" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-10 offset-2">
+                <div class="form-group mb-3">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Content"></label>
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control", id = "summernote" })
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="Image"></label>
+                    <br />
+                    <img id="articleImage" class="mb-1 border-1" style="height:300px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.Image))">
+                    <input id="uploadImage" type="file"
+                           accept=".png,.jpg,.jpeg,.gif,.tif"
+                           asp-for="Image"
+                           class="form-control"
+                           onchange="document.getElementById('articleImage').src = window.URL.createObjectURL(this.files[0])" />
+                    <span asp-validation-for="Image"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <label asp-for="TopicIds"></label>
+                    <select asp-for="TopicIds" asp-items="@(new SelectList(Model.TopicIds, "Id", "Name"))" class="form-control" id="topicList" size="5" multiple="multiple"></select>
+                    <span asp-validation-for="TopicIds"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="form-group float-end">
+                    <input type="submit" id="createArticle" value="Oluştur" class="btn btn-success" asp-route-id="@Model.Id" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/lib/select2/js/select2.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/Topic/GetAll",
+                async: true,
+                success: function (data) {
+                    $("#topicList").select2({
+                        placeholder: "Lütfen Konu Seçiniz"
+                    });
+                    $.each(data, function (index, value) {
+                        $('#topicList').append($('<option>', {
+                            value: value.id,
+                            text: value.name
+                        }));
+
+                    });
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+
+} 

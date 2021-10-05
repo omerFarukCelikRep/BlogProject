@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UI</title>
+    <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles")
+    }
+</head>
+<body>
+    @if (IsSectionDefined("Header"))
+    {
+        @RenderSectionAsync("Header")
+    }
+    else
+    {
+        <header>
+            @await Component.InvokeAsync("Navbar")
+        </header>
+    }
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer>
+        @RenderSection("Footer", required: false)
+    </footer>
+
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

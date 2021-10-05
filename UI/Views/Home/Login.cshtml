@@ -1,0 +1,35 @@
+﻿@model LoginUserDto
+
+<form class="vh-100" asp-action="Login" >
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem; background-color: #508bfc;">
+                    <div class="card-body p-5 text-center">
+
+                        <h3 class="mb-5">Giriş Yap</h3>
+
+                        <div class="form-control mb-4 bg-secondary rounded-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input type="email" class="form-control form-control-lg" asp-for="Email" />
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+
+                        <div class="form-control mb-4 bg-secondary rounded-3">
+                            <label class="form-label" asp-for="Password"></label>
+                            <input class="form-control form-control-lg" asp-for="Password" />
+                            <span class="text-danger" asp-validation-for="Password"></span>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Giriş Yap</button>
+
+                        <hr class="my-4">
+                        <div class="form-control mb-4 bg-secondary rounded-3">
+                            <label class="form-label">Kayıt Olmak İçin <a class="link-info" asp-action="Register">Tıklayınız!</a></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

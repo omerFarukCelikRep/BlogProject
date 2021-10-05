@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ArticleDetailsDto>
+
+@foreach (var item in Model)
+{
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+            <h6 class="card-subtitle mb-2 text-muted"><label>@Html.DisplayFor(modelItem => item.CreatedDate)</label>  -  <label>@Html.DisplayFor(modelItem => item.ReadTime) dakika</label></h6>
+            <p class="card-text">@item.Content ...</p>
+            <a asp-controller="Article" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Oku</a>
+        </div>
+    </div>
+}

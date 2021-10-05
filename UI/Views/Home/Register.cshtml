@@ -1,0 +1,139 @@
+﻿@model RegisterUserDto
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="row mt-4">
+    <div class="col-7">
+        <form id="registerForm" asp-action="Register">
+            <h4>Yeni Kullanıcı Oluştur</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" required autocomplete="off" />
+                <span asp-validation-for="Password" class="text-danger form-control-feedback"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmedPassword"></label>
+                <input asp-for="ConfirmedPassword" class="form-control" disabled required autocomplete="off" />
+                <span asp-validation-for="ConfirmedPassword" class="glyphicon text-danger form-control-feedback"></span>
+            </div>
+
+            <div class="form-group my-2">
+
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-4 offset-1">
+        <section>
+            <h4>Blog Sitemize Ücretsiz Kaydolabilirsiniz!</h4>
+
+        </section>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validate/additional-methods.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var value = $("#Password").val();
+
+            $.validator.addMethod("checklower", function (value) {
+                return /[a-z]/.test(value);
+            });
+            $.validator.addMethod("checkupper", function (value) {
+                return /[A-Z]/.test(value);
+            });
+            $.validator.addMethod("checkdigit", function (value) {
+                return /[0-9]/.test(value);
+            });
+            $.validator.addMethod("pwcheck", function (value) {
+                return /^[A-Za-z0-9\d=!\-@@._*]*$/.test(value) && /[a-z]/.test(value) && /\d/.test(value) && /[A-Z]/.test(value);
+            });
+
+            $("#registerForm").validate({
+                rules: {
+                    Name: {
+                        required:true
+                    },
+                    Email: {
+                        required: true,
+                        email:true
+                    },
+                    Password: {
+                        minlength: 8,
+                        required: true,
+                        checklower: true,
+                        checkupper: true,
+                        checkdigit: true
+                    },
+                    ConfirmedPassword: {
+                        equalTo: "#Password"
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: "İsim Alanı Boş Geçilemez"
+                    },
+                    Email: {
+                        required: "Lütfen Bir Email Adresi Giriniz",
+                        email:"Lütfen Geçerli Bir Email Adresi Giriniz"
+                    },
+                    Password: {
+                        pwcheck: "Password is not strong enough",
+                        checklower: "En az bir küçük karakter girmelisiniz",
+                        checkupper: "En az bir büyük karakter girmelisiniz",
+                        checkdigit: "En az bir sayı girmelisiniz",
+                        minlength: "Şifreniz en az 8 karakter olmalıdır!",
+                        required:"Şifre alanını boş geçemezsiniz"
+                    },
+                    ConfirmedPassword: {
+                        equalTo:"Şifreniz eşleşmemektedir"
+                    }
+                },
+                highlight: function (element) {
+                    var id_attr = "#" + $(element).attr("id") + "1";
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    $(id_attr).removeClass('glyphicon-ok').addClass('glyphicon-remove');
+                    $('.form-group').css('margin-bottom', '5px');
+                    $('.form').css('padding', '30px 40px');
+                    $('.tab-group').css('margin', '0 0 25px 0');
+                    $('.help-block').css('display', '');
+                },
+                unhighlight: function (element) {
+                    $('#ConfirmedPassword').attr('disabled', false);
+                },
+                errorElement: 'span',
+                errorClass: 'validate_cus',
+                errorPlacement: function (error, element) {
+                    x = element.length;
+                    if (element.length) {
+                        error.insertAfter(element);
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+        });
+    </script>
+}

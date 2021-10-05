@@ -1,0 +1,41 @@
+﻿@model UserDetailsDto
+
+<div class="dropdown text-end">
+    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        @if (Model.ProfilePicture != Array.Empty<byte>())
+        {
+            <img alt="@Model.Name" class="rounded-circle" style="width:32px;height:32px;" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProfilePicture))">
+        }
+        else
+        {
+            <img alt="@Model.Name" class="rounded-circle" style="width:32px;height:32px;" src="~/images/non-user.jpeg">
+        }
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser1" style="">
+        <li>
+            <div class="d-inline-flex">
+                <div>
+                    @if (Model.ProfilePicture != Array.Empty<byte>())
+                    {
+                        <img alt="@Model.Name" class="rounded-circle mt-3" style="width:32px;height:32px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProfilePicture))">
+                    }
+                    else
+                    {
+                        <img alt="@Model.Name" class="rounded-circle mt-3" style="width:32px;height:32px; object-fit:cover" src="~/images/non-user.jpeg">
+                    }
+                </div>
+                <div>
+                    <a class="dropdown-item" asp-controller="User" asp-action="Details">@Html.DisplayFor(model => model.Name)</a>
+                    <p class="dropdown-item text-black-50"><label>@Html.Raw("@")</label>@Html.DisplayFor(model => model.UserName)</p>
+                </div>
+            </div>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" asp-controller="User" asp-action="Details">Profil</a></li>
+        <li><a class="dropdown-item" asp-controller="User" asp-action="Edit">Profili Düzenle</a></li>
+        <li><a class="dropdown-item" asp-controller="Article" asp-action="UserArticles">Makalelerim</a></li>
+        <li><a class="dropdown-item" asp-controller="Article" asp-action="Create">Makale Oluştur</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" asp-controller="Home" asp-action="Logout">Çıkış Yap</a></li>
+    </ul>
+</div>
